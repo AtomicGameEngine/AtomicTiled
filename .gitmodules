@@ -1,0 +1,3 @@
+[submodule "src/AtomicLib"]
+	path = src/AtomicLib
+	url = https://github.com/AtomicGameEngine/AtomicLib

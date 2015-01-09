@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
     TiledApplication a(argc, argv);
 
     a.setOrganizationDomain(QLatin1String("mapeditor.org"));
-    a.setApplicationName(QLatin1String("Tiled"));
+    a.setApplicationName(QLatin1String("Atomic Tiled"));
 #ifdef BUILD_INFO_VERSION
     a.setApplicationVersion(QLatin1String(AS_STRING(BUILD_INFO_VERSION)));
 #else
@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
     a.setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 
-#ifndef Q_OS_WIN
+#ifndef Q_OS_WIN__DISABLED
     QString baseName = QApplication::style()->objectName();
     if (baseName == QLatin1String("windows")) {
         // Avoid Windows 95 style at all cost
@@ -181,6 +181,49 @@ int main(int argc, char *argv[])
         a.setStyle(QStyleFactory::create(baseName));
     }
 #endif
+
+    a.setStyle(QStyleFactory::create(QLatin1String("Fusion")));
+
+/*
+    enum ColorRole { Light, Midlight, Dark, Mid,
+                     Shadow,
+                     Highlight, HighlightedText,
+                     LinkVisited,
+                     NoRole,
+                     ToolTipBase, ToolTipText,
+                     NColorRoles = ToolTipText + 1,
+                     Foreground = WindowText, Background = Window
+                   };
+*/
+
+    QPalette darkPalette;
+
+    darkPalette.setColor(QPalette::Window, QColor(53,53,53));
+    darkPalette.setColor(QPalette::WindowText, QColor(164, 164, 164));
+    darkPalette.setColor(QPalette::Base, QColor(25,25,25));
+    darkPalette.setColor(QPalette::AlternateBase, QColor(53,53,53));
+    darkPalette.setColor(QPalette::ToolTipBase, QColor(164, 164, 164));
+    darkPalette.setColor(QPalette::ToolTipText, QColor(164, 164, 164));
+    darkPalette.setColor(QPalette::Text, QColor(164, 164, 164));
+    darkPalette.setColor(QPalette::Button, QColor(53,53,53));
+    darkPalette.setColor(QPalette::ButtonText, QColor(128, 128, 128));
+    darkPalette.setColor(QPalette::BrightText, QColor(128, 128, 128));
+    darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+
+    darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+    darkPalette.setColor(QPalette::HighlightedText, Qt::black);
+
+    darkPalette.setColor(QPalette::NoRole, QColor(53,53,53));
+
+    darkPalette.setColor(QPalette::Light, QColor(128,128,128));
+    darkPalette.setColor(QPalette::Midlight, QColor(100,100,100));
+    darkPalette.setColor(QPalette::Dark, QColor(53,53,53));
+    darkPalette.setColor(QPalette::Mid, QColor(72,72,72));
+    darkPalette.setColor(QPalette::Shadow, QColor(16,16,16));
+
+    a.setPalette(darkPalette);
+
+    a.setStyleSheet(QLatin1String("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }"));
 
     LanguageManager *languageManager = LanguageManager::instance();
     languageManager->installTranslators();
